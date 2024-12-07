@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MyToDo.Api.Services.Implementations;
 using MyToDo.Api.Services.Interfaces;
 using MyToDo.Shared.Dtos;
 using MyToDo.Shared.Models;
@@ -16,12 +17,16 @@ namespace MyToDo.Api.Controllers
             this.service = service;
         }
 
-        [HttpGet]
-        public async Task<ApiResponse> Login(string username, string password) =>
-            await service.LoginAsync(username, password);
+        [HttpPost]
+        public async Task<ApiResponse> Login([FromBody] UserDto user) =>
+            await service.LoginAsync(user.UserName, user.Password);
 
         [HttpPost]
         public async Task<ApiResponse> Register([FromBody] UserDto user) =>
             await service.RegisterAsync(user);
+
+        [HttpPost]
+        public async Task<ApiResponse> RefreshToken([FromBody] string refreshToken) =>
+            await service.RefreshTokenAsync(refreshToken);
     }
 }

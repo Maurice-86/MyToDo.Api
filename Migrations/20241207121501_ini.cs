@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace MyToDo.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class initDb : Migration
+    public partial class ini : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,8 +17,8 @@ namespace MyToDo.Api.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Title = table.Column<string>(type: "TEXT", nullable: false),
-                    Content = table.Column<string>(type: "TEXT", nullable: true),
+                    Title = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    Content = table.Column<string>(type: "TEXT", maxLength: 500, nullable: true),
                     CreateTime = table.Column<long>(type: "INTEGER", nullable: false),
                     UpdateTime = table.Column<long>(type: "INTEGER", nullable: false)
                 },
@@ -32,8 +33,8 @@ namespace MyToDo.Api.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Title = table.Column<string>(type: "TEXT", nullable: false),
-                    Content = table.Column<string>(type: "TEXT", nullable: true),
+                    Title = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    Content = table.Column<string>(type: "TEXT", maxLength: 500, nullable: true),
                     Status = table.Column<int>(type: "INTEGER", nullable: false),
                     CreateTime = table.Column<long>(type: "INTEGER", nullable: false),
                     UpdateTime = table.Column<long>(type: "INTEGER", nullable: false)
@@ -51,7 +52,8 @@ namespace MyToDo.Api.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     UserName = table.Column<string>(type: "TEXT", nullable: false),
                     Password = table.Column<string>(type: "TEXT", nullable: false),
-                    NickName = table.Column<string>(type: "TEXT", nullable: true),
+                    RefreshToken = table.Column<string>(type: "TEXT", nullable: true),
+                    RefreshTokenExpireTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     CreateTime = table.Column<long>(type: "INTEGER", nullable: false),
                     UpdateTime = table.Column<long>(type: "INTEGER", nullable: false)
                 },

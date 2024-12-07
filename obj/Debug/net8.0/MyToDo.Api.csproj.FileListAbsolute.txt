@@ -325,3 +325,13 @@ C:\Users\wengym\source\repos\MyToDo.Api\obj\Debug\net8.0\ref\MyToDo.Api.dll
 C:\Users\wengym\Desktop\WpfDemo\MyToDo.Api\bin\Debug\net8.0\FluentValidation.dll
 C:\Users\wengym\Desktop\WpfDemo\MyToDo.Api\bin\Debug\net8.0\FluentValidation.AspNetCore.dll
 C:\Users\wengym\Desktop\WpfDemo\MyToDo.Api\bin\Debug\net8.0\FluentValidation.DependencyInjectionExtensions.dll
+C:\Users\wengym\Desktop\WpfDemo\MyToDo.Api\obj\Debug\net8.0\MyToDo.Api.sourcelink.json
+C:\Users\wengym\Desktop\WpfDemo\MyToDo.Api\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\wengym\Desktop\WpfDemo\MyToDo.Api\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\wengym\Desktop\WpfDemo\MyToDo.Api\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\wengym\Desktop\WpfDemo\MyToDo.Api\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\wengym\Desktop\WpfDemo\MyToDo.Api\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\wengym\Desktop\WpfDemo\MyToDo.Api\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\wengym\Desktop\WpfDemo\MyToDo.Api\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\wengym\Desktop\WpfDemo\MyToDo.Api\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\wengym\Desktop\WpfDemo\MyToDo.Api\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll

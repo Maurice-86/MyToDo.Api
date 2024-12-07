@@ -28,8 +28,10 @@ namespace MyToDo.Api.Services.Implementations
                 var repository = work.GetRepository<TEntity>();
                 await repository.InsertAsync(entity);
                 if (await work.SaveChangesAsync() > 0)
-                    return new ApiResponse("添加成功", entity.Id);
-
+                {
+                    var dto = mapper.Map<T>(entity);
+                    return new ApiResponse("添加成功", dto);
+                }
                 return new ApiResponse("添加失败");
             }
             catch (Exception ex)

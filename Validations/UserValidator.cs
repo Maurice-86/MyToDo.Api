@@ -3,6 +3,9 @@ using MyToDo.Shared.Dtos;
 
 namespace MyToDo.Api.Models.Validations
 {
+    /// <summary>
+    /// 用户验证器
+    /// </summary>
     public class UserValidator : AbstractValidator<UserDto>
     {
         public UserValidator()

@@ -1,229 +1,288 @@
 # MyToDo.Api 项目文档
 
-## 项目架构
+## 1. 项目概述
 
-### 1. 领域层 (Domain)
-位置：`Domain/Entities/`
-- `IEntity.cs` - 实体接口，定义基础字段
-- `BaseEntity.cs` - 实体基类，实现 IEntity  
-    ```csharp
-    public class BaseEntity : IEntity
-    {
-        public int Id { get; set; }
-        public long CreateTime { get; set; }
-        public long UpdateTime { get; set; }
-    }  
-    ```
-- 业务实体：
-  - `ToDo.cs` - 待办事项
-  - `Memo.cs` - 备忘录
-  - `User.cs` - 用户
+### 1.1 项目介绍
+- 基于 .NET 8.0 的待办事项管理系统
+- WebApi + JWT 认证的前后端分离架构
+- Repository + UnitOfWork 模式的数据访问层
+- 使用 Entity Framework Core + SQLite 的数据持久化
 
-### 2. 基础设施层 (Infrastructure)
-位置：`Infrastructure/`
+### 1.2 主要功能
+- 用户认证
+  - 注册/登录
+  - JWT Token 认证
+  - Token 自动刷新
+- 待办事项管理
+  - 增删改查
+  - 状态管理（待办/完成）
+- 备忘录管理
+  - 增删改查
+  - 内容管理
 
-#### 2.1 数据访问
-- `Context/MyToDoContext.cs` - EF Core 数据库上下文  
-    ```csharp
-    public class MyToDoContext : DbContext
-    {
-        public MyToDoContext(DbContextOptions<MyToDoContext> options) : base(options) { }
-        public DbSet<User> Users { get; set; }
-        public DbSet<ToDo> ToDos { get; set; }
-        public DbSet<Memo> Memos { get; set; }
-    }  
-    ```
+## 2. 技术栈
 
-#### 2.2 仓储实现
-- `Repository/` - 基于 UnitOfWork 模式的仓储实现
-  - `ToDoRepository.cs`
-  - `MemoRepository.cs`
-  - `UserRepository.cs`
+### 2.1 核心框架
+- .NET 8.0
+- ASP.NET Core WebApi
+- Entity Framework Core 9.0
 
-### 3. 应用服务层 (Services)
-位置：`Services/`
-- 接口定义：
-  - `IToDoService.cs`
-  - `IMemoService.cs`
-  - `IUserService.cs`
-- 实现类：
-  - `ToDoService.cs`
-  - `MemoService.cs`
-  - `UserService.cs`
+### 2.2 数据库
+- SQLite
+- Entity Framework Core
+- Repository + UnitOfWork 模式
 
-### 4. 表现层 (Controllers)
-位置：`Controllers/`
-- `ToDoController.cs`
-- `MemoController.cs`
-- `UserController.cs`
+### 2.3 身份认证
+- JWT Bearer Token
+- BCrypt.Net-Next (密码加密)
 
-## 框架配置说明
+### 2.4 开发工具包
+- AutoMapper 13.0 (对象映射)
+- FluentValidation (数据验证)
+- Swagger/OpenAPI (API文档)
 
-### 1. 依赖注入配置
-在 `Program.cs` 中配置：
+### 2.5 项目依赖包
 
-```csharp
-var builder = WebApplication.CreateBuilder(args);
+#### EF Core 相关
+- Microsoft.EntityFrameworkCore
+- Microsoft.EntityFrameworkCore.Sqlite
+- Microsoft.EntityFrameworkCore.Design
+- Microsoft.EntityFrameworkCore.Tools
+- Microsoft.EntityFrameworkCore.AutoHistory
 
-// 1. 数据库上下文注册
-builder.Services.AddDbContext<MyToDoContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("ToDoConnection")));
+#### 对象映射
+- AutoMapper
 
-// 2. 仓储层注册
-builder.Services.AddScoped<IRepository<ToDo>, ToDoRepository>();
-builder.Services.AddScoped<IRepository<Memo>, MemoRepository>();
-builder.Services.AddScoped<IRepository<User>, UserRepository>();
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork<MyToDoContext>>();
+#### 数据验证
+- FluentValidation
+- FluentValidation.AspNetCore
+- FluentValidation.DependencyInjectionExtensions
 
-// 3. 服务层注册
-builder.Services.AddScoped<IToDoService, ToDoService>();
-builder.Services.AddScoped<IMemoService, MemoService>();
-builder.Services.AddScoped<IUserService, UserService>();
+#### 认证相关
+- Microsoft.AspNetCore.Authentication.JwtBearer
+- BCrypt.Net-Next
 
-// 4. AutoMapper 配置
-builder.Services.AddAutoMapper(typeof(AutoMapperProFile));
+#### API文档
+- Swashbuckle.AspNetCore
 
-// 5. 添加 FluentValidation
-builder.Services.AddFluentValidationAutoValidation();
-builder.Services.AddValidatorsFromAssemblyContaining<UserValidator>();
-builder.Services.AddValidatorsFromAssemblyContaining<TodoValidator>();
-builder.Services.AddValidatorsFromAssemblyContaining<MemoValidator>();
+## 3. 项目结构
+
+### 3.1 目录结构
+```
+MyToDo.Api/
+├── Controllers/            # API控制器
+│   ├── ToDoController.cs  # 待办事项控制器
+│   ├── MemoController.cs  # 备忘录控制器
+│   └── UserController.cs  # 用户控制器
+├── Domain/                # 领域层
+│   └── Entities/         # 实体类
+│       ├── BaseEntity.cs # 实体基类
+│       ├── ToDo.cs       # 待办事项实体
+│       ├── Memo.cs       # 备忘录实体
+│       └── User.cs       # 用户实体
+├── Infrastructure/          # 基础设施层
+│   ├── Context/            # 数据库上下文
+│   │   └── MyToDoContext.cs
+│   ├── Repository/         # 仓储实现
+│   │   ├── Repository.cs   # 通用仓储基类
+│   │   ├── ToDoRepository.cs
+│   │   ├── MemoRepository.cs
+│   │   └── UserRepository.cs
+│   └── UnitOfWork/         # 工作单元
+├── Common/                  # 公共类
+│   ├── Configurations/     # 配置类
+│   │   └── JwtSettings.cs  # JWT配置
+│   └── Extensions/         # 扩展方法
+│       ├── AutoMapperProFile.cs     # AutoMapper配置文件
+│       └── JwtExtensions.cs         # JWT扩展方法
+└── Validators/             # 验证器
+    ├── UserValidator.cs    # 用户验证器
+    ├── TodoValidator.cs    # 待办事项验证器
+    └── MemoValidator.cs    # 备忘录验证器
 ```
 
-### 2. 数据库配置
-在 `appsettings.json` 中配置：
+### 3.2 层次说明
 
+#### 3.2.1 领域层 (Domain)
+- 定义核心业务实体
+- 包含业务规则和约束
+- 实体间的关系定义
+
+#### 3.2.2 基础设施层 (Infrastructure)
+- 数据持久化实现
+- 仓储模式实现
+- 工作单元实现
+
+#### 3.2.3 应用服务层 (Services)
+- 业务逻辑实现
+- 数据验证和转换
+- 事务处理
+
+#### 3.2.4 表现层 (Controllers)
+- API 接口实现
+- 请求处理
+- 响应封装
+
+## 4. 核心实现
+
+### 4.1 实体定义
+
+#### 基础实体
+```csharp
+public class BaseEntity
+{
+    public int Id { get; set; }
+    public long CreateTime { get; set; }
+    public long UpdateTime { get; set; }
+}
+```
+
+#### 用户实体
+```csharp
+public class User : BaseEntity
+{
+    public string UserName { get; set; }
+    public string Password { get; set; }
+    public string? RefreshToken { get; set; }
+    public DateTime? RefreshTokenExpireTime { get; set; }
+}
+```
+
+### 4.2 数据库上下文
+```csharp
+public class MyToDoContext : DbContext
+{
+    public DbSet<User> Users { get; set; }
+    public DbSet<ToDo> ToDos { get; set; }
+    public DbSet<Memo> Memos { get; set; }
+}
+```
+
+### 4.3 仓储实现
+- 基于泛型仓储模式
+- 支持异步操作
+- 集成工作单元
+
+### 4.4 验证器
+- 使用 FluentValidation
+- 支持模型验证
+- 自定义验证规则
+
+## 5. 配置说明
+
+### 5.1 数据库配置
+在 `appsettings.json` 中：
 ```json
 {
   "ConnectionStrings": {
     "ToDoConnection": "Data Source=todo.db"
-  },
-  "Logging": {
-    "LogLevel": {
-      "Default": "Information",
-      "Microsoft.AspNetCore": "Warning"
-    }
-  },
-  "AllowedHosts": "*"
+  }
 }
 ```
 
-### 3. AutoMapper 配置
-在 `Common/Extensions/AutoMapperProFile.cs` 中：
-
-```csharp
-public class AutoMapperProFile : Profile
+### 5.2 JWT配置
+在 `appsettings.json` 中：
+```json:MyToDo.Api/README.md
 {
-    public AutoMapperProFile()
-    {
-        // User 映射配置
-        CreateMap<User, UserDto>().ReverseMap();
-
-        // ToDo 映射配置
-        CreateMap<ToDo, TodoDto>().ReverseMap();
-
-        // Memo 映射配置
-        CreateMap<Memo, MemoDto>().ReverseMap();
-    }
+  "JwtSettings": {
+    "SecretKey": "your-secret-key-at-least-16-characters",
+    "Issuer": "MyToDo.Api",
+    "Audience": "MyToDo.Client",
+    "ExpireMinutes": 60
+  }
 }
 ```
 
-## 实现说明
+### 5.3 依赖注入配置
+在 `Program.cs` 中：
+```csharp
+// 数据库上下文
+builder.Services.AddDbContext<MyToDoContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("ToDoConnection")));
 
-### 1. 仓储层实现
-- 基于 Repository 模式
-- 实现 CRUD 基本操作
-- 支持自定义查询方法
-- 使用 EF Core 进行数据访问
+// 仓储和工作单元
+builder.Services.AddScoped<IRepository<ToDo>, ToDoRepository>();
+builder.Services.AddScoped<IRepository<Memo>, MemoRepository>();
+builder.Services.AddScoped<IRepository<User>, UserRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-### 2. 服务层实现
-- 注入仓储接口
-- 使用 AutoMapper 进行对象映射
-- 统一的异常处理
-- 事务管理
+// 应用服务
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IToDoService, ToDoService>();
+builder.Services.AddScoped<IMemoService, MemoService>();
 
-### 3. 控制器实现
-- RESTful API 设计
-- 统一的路由规则
-- 参数验证
-- 统一响应格式
+// AutoMapper
+builder.Services.AddAutoMapper(typeof(AutoMapperProFile));
 
-### 4. 数据模型
-- 实体模型：继承 BaseEntity
-- DTO 模型：用于数据传输
-- 使用特性标注进行验证
+// FluentValidation
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssemblyContaining<UserValidator>();
+```
 
-## 开发流程
+## 6. JWT认证实现
 
-1. 定义实体模型
-2. 配置数据库迁移
-3. 实现仓储层
-4. 实现服务层
-5. 实现控制器
-6. 配置依赖注入
-7. 测试 API
+### 6.1 认证配置
+```csharp
+// 配置 JWT 服务
+builder.Services.AddJwtAuthentication(builder.Configuration);
+```
 
-## 各层职责说明
+### 6.2 认证流程
 
-### 1. 领域层 (Domain)
-- 定义核心业务实体
-- 包含业务规则和约束
-- 使用特性标注验证规则
+#### 6.2.1 用户注册
+- 路由：`POST /api/User/Register`
+- 请求验证
+- 密码加密
+- 保存用户信息
+- 生成Token
 
-### 2. 基础设施层 (Infrastructure)
-- 实现数据持久化
-- 提供仓储模式封装
-- 处理数据访问细节
+#### 6.2.2 用户登录
+- 路由：`POST /api/User/Login`
+- 验证用户名密码
+- 生成访问令牌和刷新令牌
+- 更新用户刷新令牌
 
-### 3. 应用服务层 (Services)
-- 实现业务逻辑
-- 协调领域对象
-- 处理事务边界
+#### 6.2.3 刷新Token
+- 路由：`POST /api/User/RefreshToken`
+- 验证刷新令牌
+- 生成新的访问令牌和刷新令牌
 
-### 4. 表现层 (Controllers)
-- 处理 HTTP 请求
-- 参数验证
-- 返回统一响应格式
+### 6.3 Token使用
 
-## 开发环境配置
+#### 请求头格式
+```
+Authorization: Bearer {accessToken}
+```
 
-### 1. 必要工具
+#### API保护
+```csharp
+[Authorize]
+[ApiController]
+[Route("api/[controller]/[action]")]
+public class ToDoController : ControllerBase
+{
+    // 需要认证的API
+}
+```
+
+## 7. 开发指南
+
+### 7.1 开发环境
+- Visual Studio 2022 或 VS Code
 - .NET 8.0 SDK
-- Visual Studio 2022/VS Code
-- SQLite 数据库
+- SQLite 工具
 
-### 2. 项目依赖
+### 7.2 项目设置
+1. 克隆项目
+2. 还原NuGet包
+3. 配置数据库连接
+4. 配置JWT密钥
 
-1. Entity Framework Core 相关：
-   - `Microsoft.EntityFrameworkCore`: EF Core 核心包
-   - `Microsoft.EntityFrameworkCore.Sqlite`: SQLite 数据库提供程序
-   - `Microsoft.EntityFrameworkCore.Design`: 设计时工具支持
-   - `Microsoft.EntityFrameworkCore.Tools`: EF Core 命令行工具
-   - `Microsoft.EntityFrameworkCore.AutoHistory`: 自动历史记录支持
+### 7.3 数据库迁移
+```bash
+# 添加迁移
+Add-Migration InitialCreate
 
-2. 对象映射：
-   - `AutoMapper`: 对象之间的映射工具
-
-3. 验证相关：
-   - `FluentValidation`: 流畅的验证规则
-   - `FluentValidation.AspNetCore`: ASP.NET Core 集成
-   - `FluentValidation.DependencyInjectionExtensions`: 依赖注入支持
-
-4. API 文档：
-   - `Swashbuckle.AspNetCore`: Swagger/OpenAPI 支持
-
-### 3. 数据库迁移
-- 添加迁移
-- 更新数据库结构
-
-## 项目运行说明
-
-### 1. 首次运行
-- 还原 NuGet 包
-- 执行数据库迁移
-- 启动项目
-
-### 2. 开发调试
-- 使用 Swagger 测试接口
-- 查看日志输出
-- 数据库操作验证
+# 更新数据库
+Update-Database
+```

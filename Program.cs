@@ -3,6 +3,7 @@ using AutoMapper;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
+using MyToDo.Api.Common.Configurations;
 using MyToDo.Api.Common.Extensions;
 using MyToDo.Api.Domain.Entities;
 using MyToDo.Api.Infrastructure.Context;
@@ -50,6 +51,14 @@ namespace MyToDo.Api
             builder.Services.AddValidatorsFromAssemblyContaining<UserValidator>();
             builder.Services.AddValidatorsFromAssemblyContaining<TodoValidator>();
             builder.Services.AddValidatorsFromAssemblyContaining<MemoValidator>();
+
+
+            // ◊¢≤· JWT ≈‰÷√
+            builder.Services.Configure<JwtSettings>(
+                builder.Configuration.GetSection("JwtSettings"));
+
+            // ≈‰÷√ JWT ∑˛ŒÒ
+            builder.Services.AddJwtAuthentication(builder.Configuration);
 
 
             builder.Services.AddControllers();

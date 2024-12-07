@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MyToDo.Api.Services.Interfaces;
 using MyToDo.Shared.Dtos;
 using MyToDo.Shared.Models;
