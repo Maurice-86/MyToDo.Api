@@ -4,7 +4,6 @@ using MyToDo.Api.Domain.Entities;
 using MyToDo.Api.Services.Interfaces;
 using MyToDo.Shared.Dtos;
 using MyToDo.Shared.Models;
-using MyToDo.Shared.Parameters;
 
 namespace MyToDo.Api.Services.Implementations
 {

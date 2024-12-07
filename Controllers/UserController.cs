@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyToDo.Api.Services.Implementations;
 using MyToDo.Api.Services.Interfaces;
 using MyToDo.Shared.Dtos;
 using MyToDo.Shared.Models;

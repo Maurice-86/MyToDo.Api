@@ -1,6 +1,4 @@
-﻿using MyToDo.Shared.Dtos;
-using MyToDo.Shared.Models;
-using MyToDo.Shared.Parameters;
+﻿using MyToDo.Shared.Models;
 
 namespace MyToDo.Api.Services.Interfaces
 {

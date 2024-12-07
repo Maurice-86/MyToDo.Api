@@ -1,5 +1,4 @@
 using Arch.EntityFrameworkCore.UnitOfWork;
-using AutoMapper;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
@@ -39,11 +38,6 @@ namespace MyToDo.Api
             builder.Services.AddScoped<IMemoService, MemoService>();
 
             // ÅäÖÃ AutoMapper
-            // var autoMapperConfig = new MapperConfiguration(config =>
-            // {
-            //     config.AddProfile(new AutoMapperProFile());
-            // });
-            // builder.Services.AddSingleton(autoMapperConfig.CreateMapper());
             builder.Services.AddAutoMapper(typeof(AutoMapperProFile));
 
             // Ìí¼Ó FluentValidation
