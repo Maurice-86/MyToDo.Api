@@ -87,7 +87,7 @@ MyToDo.Api/
 │   │   ├── ToDoRepository.cs
 │   │   ├── MemoRepository.cs
 │   │   └── UserRepository.cs
-│   └── UnitOfWork/         # 工作单元（https://github.com/Arch/UnitOfWork）
+│   └── UnitOfWork/         # 工作单元
 ├── Common/                  # 公共类
 │   ├── Configurations/     # 配置类
 │   │   └── JwtSettings.cs  # JWT配置
