@@ -5,13 +5,15 @@
 ### 1. 领域层 (Domain)
 位置：`Domain/Entities/`
 - `IEntity.cs` - 实体接口，定义基础字段
-- `BaseEntity.cs` - 实体基类，实现 IEntity  ```csharp
-  public class BaseEntity : IEntity
-  {
-      public int Id { get; set; }
-      public long CreateTime { get; set; }
-      public long UpdateTime { get; set; }
-  }  ```
+- `BaseEntity.cs` - 实体基类，实现 IEntity  
+    ```csharp
+    public class BaseEntity : IEntity
+    {
+        public int Id { get; set; }
+        public long CreateTime { get; set; }
+        public long UpdateTime { get; set; }
+    }  
+    ```
 - 业务实体：
   - `ToDo.cs` - 待办事项
   - `Memo.cs` - 备忘录
@@ -21,14 +23,16 @@
 位置：`Infrastructure/`
 
 #### 2.1 数据访问
-- `Context/MyToDoContext.cs` - EF Core 数据库上下文  ```csharp
-  public class MyToDoContext : DbContext
-  {
-      public MyToDoContext(DbContextOptions<MyToDoContext> options) : base(options) { }
-      public DbSet<User> Users { get; set; }
-      public DbSet<ToDo> ToDos { get; set; }
-      public DbSet<Memo> Memos { get; set; }
-  }  ```
+- `Context/MyToDoContext.cs` - EF Core 数据库上下文  
+    ```csharp
+    public class MyToDoContext : DbContext
+    {
+        public MyToDoContext(DbContextOptions<MyToDoContext> options) : base(options) { }
+        public DbSet<User> Users { get; set; }
+        public DbSet<ToDo> ToDos { get; set; }
+        public DbSet<Memo> Memos { get; set; }
+    }  
+    ```
 
 #### 2.2 仓储实现
 - `Repository/` - 基于 UnitOfWork 模式的仓储实现
@@ -159,18 +163,6 @@ public class AutoMapperProFile : Profile
 6. 配置依赖注入
 7. 测试 API
 
-## 测试说明
-
-1. 单元测试
-   - 服务层测试
-   - 使用 Mock 框架
-   - 测试基本 CRUD 操作
-
-2. 集成测试
-   - API 接口测试
-   - 数据库操作测试
-   - 完整流程测试
-
 ## 各层职责说明
 
 ### 1. 领域层 (Domain)
@@ -201,9 +193,24 @@ public class AutoMapperProFile : Profile
 - SQLite 数据库
 
 ### 2. 项目依赖
-- Microsoft.EntityFrameworkCore.Sqlite
-- AutoMapper
-- Microsoft.EntityFrameworkCore.Tools
+
+1. Entity Framework Core 相关：
+   - `Microsoft.EntityFrameworkCore`: EF Core 核心包
+   - `Microsoft.EntityFrameworkCore.Sqlite`: SQLite 数据库提供程序
+   - `Microsoft.EntityFrameworkCore.Design`: 设计时工具支持
+   - `Microsoft.EntityFrameworkCore.Tools`: EF Core 命令行工具
+   - `Microsoft.EntityFrameworkCore.AutoHistory`: 自动历史记录支持
+
+2. 对象映射：
+   - `AutoMapper`: 对象之间的映射工具
+
+3. 验证相关：
+   - `FluentValidation`: 流畅的验证规则
+   - `FluentValidation.AspNetCore`: ASP.NET Core 集成
+   - `FluentValidation.DependencyInjectionExtensions`: 依赖注入支持
+
+4. API 文档：
+   - `Swashbuckle.AspNetCore`: Swagger/OpenAPI 支持
 
 ### 3. 数据库迁移
 - 添加迁移
