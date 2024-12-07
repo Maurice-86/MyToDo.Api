@@ -33,17 +33,17 @@ namespace MyToDo.Api
             .AddCustomRepository<Memo, MemoRepository>();   // ÃÌº”≤÷¥¢
 
             // “¿¿µ◊¢»Î
-            builder.Services.AddTransient<IUserService, UserService>();
-            builder.Services.AddTransient<IToDoService, ToDoService>();
-            builder.Services.AddTransient<IMemoService, MemoService>();
+            builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IToDoService, ToDoService>();
+            builder.Services.AddScoped<IMemoService, MemoService>();
 
             // ≈‰÷√ AutoMapper
-            var autoMapperConfig = new MapperConfiguration(config =>
-            {
-                config.AddProfile(new AutoMapperProFile());
-            });
-            builder.Services.AddSingleton(autoMapperConfig.CreateMapper());
-
+            // var autoMapperConfig = new MapperConfiguration(config =>
+            // {
+            //     config.AddProfile(new AutoMapperProFile());
+            // });
+            // builder.Services.AddSingleton(autoMapperConfig.CreateMapper());
+            builder.Services.AddAutoMapper(typeof(AutoMapperProFile));
 
             // ÃÌº” FluentValidation
             builder.Services.AddFluentValidationAutoValidation();
