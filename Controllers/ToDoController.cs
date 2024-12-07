@@ -7,6 +7,7 @@ using MyToDo.Shared.Parameters;
 
 namespace MyToDo.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]/[action]")]
     public class ToDoController : ControllerBase
