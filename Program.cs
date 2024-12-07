@@ -1,11 +1,15 @@
-
 using Arch.EntityFrameworkCore.UnitOfWork;
 using AutoMapper;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
-using MyToDo.Api.Context;
-using MyToDo.Api.Context.Repository;
-using MyToDo.Api.Extensions;
-using MyToDo.Api.Service;
+using MyToDo.Api.Common.Extensions;
+using MyToDo.Api.Domain.Entities;
+using MyToDo.Api.Infrastructure.Context;
+using MyToDo.Api.Infrastructure.Repository;
+using MyToDo.Api.Models.Validations;
+using MyToDo.Api.Services.Implementations;
+using MyToDo.Api.Services.Interfaces;
 
 namespace MyToDo.Api
 {
@@ -39,6 +43,14 @@ namespace MyToDo.Api
                 config.AddProfile(new AutoMapperProFile());
             });
             builder.Services.AddSingleton(autoMapperConfig.CreateMapper());
+
+
+            // Ìí¼Ó FluentValidation
+            builder.Services.AddFluentValidationAutoValidation();
+            builder.Services.AddValidatorsFromAssemblyContaining<UserValidator>();
+            builder.Services.AddValidatorsFromAssemblyContaining<TodoValidator>();
+            builder.Services.AddValidatorsFromAssemblyContaining<MemoValidator>();
+
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -1,6 +1,7 @@
 ﻿using MyToDo.Shared.Dtos;
+using MyToDo.Shared.Models;
 
-namespace MyToDo.Api.Service
+namespace MyToDo.Api.Services.Interfaces
 {
     public interface IUserService
     {

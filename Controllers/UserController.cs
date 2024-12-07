@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyToDo.Api.Service;
+using MyToDo.Api.Services.Interfaces;
 using MyToDo.Shared.Dtos;
+using MyToDo.Shared.Models;
 
 namespace MyToDo.Api.Controllers
 {

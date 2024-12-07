@@ -1,6 +1,6 @@
-﻿namespace MyToDo.Api.Context
+﻿namespace MyToDo.Api.Domain.Entities
 {
-    public class BaseEntity
+    public class BaseEntity : IEntity
     {
         public int Id { get; set; }
         public long CreateTime { get; set; }

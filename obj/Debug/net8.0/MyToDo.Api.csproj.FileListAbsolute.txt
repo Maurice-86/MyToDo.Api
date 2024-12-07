@@ -322,3 +322,6 @@ C:\Users\wengym\source\repos\MyToDo.Api\obj\Debug\net8.0\refint\MyToDo.Api.dll
 C:\Users\wengym\source\repos\MyToDo.Api\obj\Debug\net8.0\MyToDo.Api.pdb
 C:\Users\wengym\source\repos\MyToDo.Api\obj\Debug\net8.0\MyToDo.Api.genruntimeconfig.cache
 C:\Users\wengym\source\repos\MyToDo.Api\obj\Debug\net8.0\ref\MyToDo.Api.dll
+C:\Users\wengym\Desktop\WpfDemo\MyToDo.Api\bin\Debug\net8.0\FluentValidation.dll
+C:\Users\wengym\Desktop\WpfDemo\MyToDo.Api\bin\Debug\net8.0\FluentValidation.AspNetCore.dll
+C:\Users\wengym\Desktop\WpfDemo\MyToDo.Api\bin\Debug\net8.0\FluentValidation.DependencyInjectionExtensions.dll

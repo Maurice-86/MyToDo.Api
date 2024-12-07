@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MyToDo.Api.Domain.Entities;
 
-namespace MyToDo.Api.Context
+namespace MyToDo.Api.Infrastructure.Context
 {
     public class MyToDoContext : DbContext
     {

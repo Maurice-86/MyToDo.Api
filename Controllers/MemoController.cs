@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyToDo.Api.Service;
+using MyToDo.Api.Services.Interfaces;
 using MyToDo.Shared.Dtos;
+using MyToDo.Shared.Models;
 using MyToDo.Shared.Parameters;
 
 namespace MyToDo.Api.Controllers
@@ -15,21 +16,22 @@ namespace MyToDo.Api.Controllers
         {
             this.service = service;
         }
+
         [HttpGet]
         public async Task<ApiResponse> Get(int id) =>
-            await service.GetAsync(id);
+            await service.GetByIdAsync(id);
 
         [HttpGet]
-        public async Task<ApiResponse> GetAll([FromQuery] QueryParameter param) =>
-            await service.GetAllAsync(param);
+        public async Task<ApiResponse> GetAll() =>
+            await service.GetAllAsync();
 
         [HttpPost]
-        public async Task<ApiResponse> Add([FromBody] MemoDto memo) =>
-            await service.AddAsync(memo);
+        public async Task<ApiResponse> Add([FromBody] MemoDto model) =>
+            await service.AddAsync(model);
 
-        [HttpPatch]
-        public async Task<ApiResponse> Update(int id, [FromBody] MemoDto memo) =>
-            await service.UpdateAsync(id, memo);
+        [HttpPost]
+        public async Task<ApiResponse> Update([FromBody] MemoDto model) =>
+            await service.UpdateAsync(model);
 
         [HttpDelete]
         public async Task<ApiResponse> Delete(int id) =>

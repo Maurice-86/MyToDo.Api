@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MyToDo.Api.Context;
+using MyToDo.Api.Infrastructure.Context;
 
 #nullable disable
 
