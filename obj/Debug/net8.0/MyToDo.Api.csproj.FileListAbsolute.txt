@@ -320,7 +320,6 @@ C:\Users\wengym\Desktop\WpfDemo\MyToDo.Api\obj\Debug\net8.0\MyToDo.Api.AssemblyI
 C:\Users\wengym\Desktop\WpfDemo\MyToDo.Api\obj\Debug\net8.0\MyToDo.Api.csproj.CoreCompileInputs.cache
 C:\Users\wengym\Desktop\WpfDemo\MyToDo.Api\obj\Debug\net8.0\MyToDo.Api.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\wengym\Desktop\WpfDemo\MyToDo.Api\obj\Debug\net8.0\MyToDo.Api.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\wengym\Desktop\WpfDemo\MyToDo.Api\obj\Debug\net8.0\MyToDo.Api.sourcelink.json
 C:\Users\wengym\Desktop\WpfDemo\MyToDo.Api\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\wengym\Desktop\WpfDemo\MyToDo.Api\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\wengym\Desktop\WpfDemo\MyToDo.Api\obj\Debug\net8.0\staticwebassets\msbuild.MyToDo.Api.Microsoft.AspNetCore.StaticWebAssets.props

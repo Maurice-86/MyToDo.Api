@@ -7,16 +7,18 @@ using MyToDo.Shared.Models;
 namespace MyToDo.Api.Services.Implementations
 {
     public class BaseService<T, TEntity> : IBaseService<T>
-        where TEntity : class, IEntity
         where T : class
+        where TEntity : class, IEntity
     {
         private readonly IUnitOfWork work;
         private readonly IMapper mapper;
+        private readonly IRepository<TEntity> repository;
 
         public BaseService(IUnitOfWork work, IMapper mapper)
         {
             this.work = work;
             this.mapper = mapper;
+            this.repository = work.GetRepository<TEntity>();
         }
 
         public virtual async Task<ApiResponse> AddAsync(T model)
@@ -25,18 +27,15 @@ namespace MyToDo.Api.Services.Implementations
             try
             {
                 var entity = mapper.Map<TEntity>(model);
-                var repository = work.GetRepository<TEntity>();
                 await repository.InsertAsync(entity);
-                if (await work.SaveChangesAsync() > 0)
-                {
-                    var dto = mapper.Map<T>(entity);
-                    return new ApiResponse("添加成功", dto);
-                }
-                return new ApiResponse("添加失败");
+                if (await work.SaveChangesAsync() <= 0)
+                    return new ApiResponse("添加失败");
+
+                return new ApiResponse<T>("添加成功", mapper.Map<T>(entity));
             }
             catch (Exception ex)
             {
-                return new ApiResponse(ex.Message);
+                return new ApiResponse($"添加失败：{ex.Message}");
             }
         }
 
@@ -44,21 +43,20 @@ namespace MyToDo.Api.Services.Implementations
         {
             try
             {
-                var repository = work.GetRepository<TEntity>();
                 var entity = await repository.GetFirstOrDefaultAsync(predicate:
                     x => x.Id.Equals(id));
                 if (entity == null)
                     return new ApiResponse("删除的数据不存在");
 
                 repository.Delete(entity);
-                if (await work.SaveChangesAsync() > 0)
-                    return new ApiResponse("删除成功", status: true);
+                if (await work.SaveChangesAsync() <= 0)
+                    return new ApiResponse("删除失败");
 
-                return new ApiResponse("删除失败");
+                return new ApiResponse("删除成功", status: true);
             }
             catch (Exception ex)
             {
-                return new ApiResponse(ex.Message);
+                return new ApiResponse($"删除失败：{ex.Message}");
             }
         }
 
@@ -66,14 +64,13 @@ namespace MyToDo.Api.Services.Implementations
         {
             try
             {
-                var repository = work.GetRepository<TEntity>();
                 var entities = await repository.GetAllAsync();
-                var dtos = mapper.Map<IEnumerable<T>>(entities);
-                return new ApiResponse(dtos);
+                var models = mapper.Map<IEnumerable<T>>(entities);
+                return new ApiResponse<IEnumerable<T>>("获取成功", models);
             }
             catch (Exception ex)
             {
-                return new ApiResponse(ex.Message);
+                return new ApiResponse($"获取失败：{ex.Message}");
             }
         }
 
@@ -81,14 +78,13 @@ namespace MyToDo.Api.Services.Implementations
         {
             try
             {
-                var repository = work.GetRepository<TEntity>();
                 var entity = await repository.GetFirstOrDefaultAsync(predicate:
                     x => x.Id.Equals(id));
                 if (entity == null)
                     return new ApiResponse("数据不存在");
 
-                var dto = mapper.Map<T>(entity);
-                return new ApiResponse(dto);
+                var model = mapper.Map<T>(entity);
+                return new ApiResponse<T>("获取成功", model);
             }
             catch (Exception ex)
             {
@@ -101,17 +97,16 @@ namespace MyToDo.Api.Services.Implementations
             try
             {
                 var entity = mapper.Map<TEntity>(model);
-                var repository = work.GetRepository<TEntity>();
 
                 // 检查是否存在
                 if (await repository.GetFirstOrDefaultAsync(predicate: x => x.Id.Equals(entity.Id)) == null)
                     return new ApiResponse("更新的数据不存在");
 
                 repository.Update(entity);
-                if (await work.SaveChangesAsync() > 0)
-                    return new ApiResponse("更新成功", status: true);
+                if (await work.SaveChangesAsync() <= 0)
+                    return new ApiResponse("更新失败");
 
-                return new ApiResponse("更新失败");
+                return new ApiResponse<T>("更新成功", mapper.Map<T>(entity));
             }
             catch (Exception ex)
             {

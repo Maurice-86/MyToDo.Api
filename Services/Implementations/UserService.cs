@@ -19,19 +19,20 @@ namespace MyToDo.Api.Services.Implementations
         private readonly IUnitOfWork work;
         private readonly IMapper mapper;
         private readonly JwtSettings jwtSettings;
+        private readonly IRepository<User> repository;
 
         public UserService(IUnitOfWork work, IMapper mapper, IOptions<JwtSettings> options)
         {
             this.work = work;
             this.mapper = mapper;
-            jwtSettings = options.Value;
+            this.jwtSettings = options.Value;
+            this.repository = work.GetRepository<User>();
         }
 
         public async Task<ApiResponse> LoginAsync(string username, string password)
         {
             try
             {
-                var repository = work.GetRepository<User>();
                 var user = await repository.GetFirstOrDefaultAsync(predicate:
                         x => x.UserName.Equals(username));
 
@@ -52,7 +53,7 @@ namespace MyToDo.Api.Services.Implementations
                     return new ApiResponse("登录失败：更新刷新令牌失败");
                 }
 
-                return new ApiResponse(new
+                return new ApiResponse<object>("登录成功", new
                 {
                     AccessToken = accessToken,
                     RefreshToken = refreshToken,
@@ -69,8 +70,6 @@ namespace MyToDo.Api.Services.Implementations
         {
             try
             {
-                var repository = work.GetRepository<User>();
-
                 // 查找具有此刷新令牌的用户
                 var user = await repository.GetFirstOrDefaultAsync(predicate:
                     x => x.RefreshToken!.Equals(refreshToken));
@@ -93,7 +92,7 @@ namespace MyToDo.Api.Services.Implementations
                 if (await work.SaveChangesAsync() <= 0)
                     return new ApiResponse("更新令牌失败");
 
-                return new ApiResponse(new
+                return new ApiResponse<object>("更新令牌成功", new
                 {
                     AccessToken = newAccessToken,
                     RefreshToken = newRefreshToken,
@@ -135,7 +134,7 @@ namespace MyToDo.Api.Services.Implementations
                 if (await work.SaveChangesAsync() <= 0)
                     return new ApiResponse("注册失败：创建用户失败");
 
-                return new ApiResponse("注册成功", new
+                return new ApiResponse<object>("注册成功", new
                 {
                     AccessToken = accessToken,
                     RefreshToken = refreshToken,

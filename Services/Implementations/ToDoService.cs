@@ -18,18 +18,6 @@ namespace MyToDo.Api.Services.Implementations
             this.mapper = mapper;
         }
 
-        public override async Task<ApiResponse> AddAsync(TodoDto model)
-        {
-            model.CreateTime = DateTimeOffset.Now.ToUnixTimeSeconds();
-            return await base.AddAsync(model);
-        }
-
-        public override async Task<ApiResponse> UpdateAsync(TodoDto model)
-        {
-            model.UpdateTime = DateTimeOffset.Now.ToUnixTimeSeconds();
-            return await base.UpdateAsync(model);
-        }
-
         public async Task<ApiResponse> GetAllByStatus(int status)
         {
             try
@@ -37,23 +25,12 @@ namespace MyToDo.Api.Services.Implementations
                 var repository = work.GetRepository<ToDo>();
                 var entities = await repository.GetAllAsync(predicate: x => x.Status.Equals(status));
                 var dtos = mapper.Map<IEnumerable<TodoDto>>(entities);
-                return new ApiResponse(dtos);
+                return new ApiResponse<IEnumerable<TodoDto>>("获取成功", dtos);
             }
             catch (Exception ex)
             {
-                return new ApiResponse(ex.Message);
+                return new ApiResponse($"获取失败{ex.Message}");
             }
         }
-
-        //public async Task<ApiResponse> GetAllAsync(QueryParameter param)
-        //{
-        //    var models = await work.GetRepository<ToDo>()
-        //        .GetPagedListAsync(predicate:
-        //        x => string.IsNullOrEmpty(param.Search) ? true : x.Title.Equals(param.Search),
-        //        pageIndex: param.PageIndex,
-        //        pageSize: param.PageSize);
-
-        //    return new ApiResponse(models);
-        //}
     }
 }

@@ -28,16 +28,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MyToDo.Shared\MyToDo.Shared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Domain\Enums\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="Infrastructure\UnitOfWork\UnitOfWork.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MyToDo.Shared\MyToDo.Shared.csproj" />
   </ItemGroup>
 
 </Project>
