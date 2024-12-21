@@ -30,7 +30,6 @@ namespace MyToDo.Api.Infrastructure.Context
                 {
                     case EntityState.Added:
                         entity.CreateTime = now;
-                        entity.UpdateTime = now;
                         break;
                     case EntityState.Modified:
                         entity.UpdateTime = now;

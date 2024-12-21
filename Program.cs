@@ -54,6 +54,8 @@ namespace MyToDo.Api
             // 配置 JWT 服务
             builder.Services.AddJwtAuthentication(builder.Configuration);
 
+            // 小写路由
+            builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

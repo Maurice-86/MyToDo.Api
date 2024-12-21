@@ -7,7 +7,7 @@ namespace MyToDo.Api.Controllers
 {
     //[Authorize]
     [ApiController]
-    [Route("api/[controller]/[action]")]
+    [Route("Api/[controller]/[action]")]
     public class MemoController : ControllerBase
     {
         private readonly IMemoService service;

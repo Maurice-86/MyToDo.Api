@@ -46,7 +46,7 @@ namespace MyToDo.Api.Services.Implementations
                 var entity = await repository.GetFirstOrDefaultAsync(predicate:
                     x => x.Id.Equals(id));
                 if (entity == null)
-                    return new ApiResponse("删除的数据不存在");
+                    return new ApiResponse($"删除的数据不存在, 你输入的id={id}");
 
                 repository.Delete(entity);
                 if (await work.SaveChangesAsync() <= 0)

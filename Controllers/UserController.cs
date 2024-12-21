@@ -6,7 +6,7 @@ using MyToDo.Shared.Models;
 namespace MyToDo.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]/[action]")]
+    [Route("Api/[controller]/[action]")]
     public class UserController : ControllerBase
     {
         private readonly IUserService service;
