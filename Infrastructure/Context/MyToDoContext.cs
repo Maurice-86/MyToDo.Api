@@ -40,9 +40,9 @@ namespace MyToDo.Api.Infrastructure.Context
             return await base.SaveChangesAsync(cancellationToken);
         }
 
-        public DbSet<User> Users { get; set; }
-        public DbSet<ToDo> ToDos { get; set; }
-        public DbSet<Memo> Memos { get; set; }
+        public DbSet<User>? Users { get; set; }
+        public DbSet<ToDo>? ToDos { get; set; }
+        public DbSet<Memo>? Memos { get; set; }
 
     }
 }

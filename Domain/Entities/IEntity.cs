@@ -2,8 +2,9 @@
 {
     public interface IEntity
     {
-        public int Id { get; set; }
-        public long CreateTime { get; set; }
-        public long UpdateTime { get; set; }
+        int Id { get; set; }
+        int Uid { get; set; }
+        long CreateTime { get; set; }
+        long UpdateTime { get; set; }
     }
 }

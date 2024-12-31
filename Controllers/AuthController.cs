@@ -7,18 +7,18 @@ namespace MyToDo.Api.Controllers
 {
     [ApiController]
     [Route("Api/[controller]/[action]")]
-    public class UserController : ControllerBase
+    public class AuthController : ControllerBase
     {
-        private readonly IUserService service;
+        private readonly IAuthService service;
 
-        public UserController(IUserService service)
+        public AuthController(IAuthService service)
         {
             this.service = service;
         }
 
         [HttpPost]
         public async Task<ApiResponse> Login([FromBody] UserDto user) =>
-            await service.LoginAsync(user.UserName, user.Password);
+            await service.LoginAsync(user.Username, user.Password);
 
         [HttpPost]
         public async Task<ApiResponse> Register([FromBody] UserDto user) =>

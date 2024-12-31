@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Arch team. All rights reserved.
 
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace Arch.EntityFrameworkCore.UnitOfWork

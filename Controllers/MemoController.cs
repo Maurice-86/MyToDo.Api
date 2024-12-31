@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyToDo.Api.Services.Interfaces;
+using MyToDo.Api.Services.Implementations;
 using MyToDo.Shared.Dtos;
 using MyToDo.Shared.Models;
 
@@ -10,20 +10,20 @@ namespace MyToDo.Api.Controllers
     [Route("Api/[controller]/[action]")]
     public class MemoController : ControllerBase
     {
-        private readonly IMemoService service;
+        private readonly MemoService service;
 
-        public MemoController(IMemoService service)
+        public MemoController(MemoService service)
         {
             this.service = service;
         }
 
         [HttpGet]
-        public async Task<ApiResponse> Get(int id) =>
-            await service.GetByIdAsync(id);
+        public async Task<ApiResponse> Get(int uid, int id) =>
+            await service.GetByIdAsync(uid, id);
 
         [HttpGet]
-        public async Task<ApiResponse> GetAll() =>
-            await service.GetAllAsync();
+        public async Task<ApiResponse> GetAll(int uid) =>
+            await service.GetAllAsync(uid);
 
         [HttpPost]
         public async Task<ApiResponse> Add([FromBody] MemoDto model) =>
@@ -34,7 +34,7 @@ namespace MyToDo.Api.Controllers
             await service.UpdateAsync(model);
 
         [HttpDelete]
-        public async Task<ApiResponse> Delete(int id) =>
-            await service.DeleteAsync(id);
+        public async Task<ApiResponse> Delete(int uid, int id) =>
+            await service.DeleteAsync(uid, id);
     }
 }

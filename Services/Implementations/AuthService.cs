@@ -14,14 +14,14 @@ using System.Text;
 
 namespace MyToDo.Api.Services.Implementations
 {
-    public class UserService : IUserService
+    public class AuthService : IAuthService
     {
         private readonly IUnitOfWork work;
         private readonly IMapper mapper;
         private readonly JwtSettings jwtSettings;
         private readonly IRepository<User> repository;
 
-        public UserService(IUnitOfWork work, IMapper mapper, IOptions<JwtSettings> options)
+        public AuthService(IUnitOfWork work, IMapper mapper, IOptions<JwtSettings> options)
         {
             this.work = work;
             this.mapper = mapper;
@@ -34,7 +34,7 @@ namespace MyToDo.Api.Services.Implementations
             try
             {
                 var user = await repository.GetFirstOrDefaultAsync(predicate:
-                        x => x.UserName.Equals(username));
+                        x => x.Username.Equals(username));
 
                 if (user == null || !VerifyPassword(password, user.Password))
                     return new ApiResponse("用户名或密码错误");
@@ -53,11 +53,11 @@ namespace MyToDo.Api.Services.Implementations
                     return new ApiResponse("登录失败：更新刷新令牌失败");
                 }
 
-                return new ApiResponse<object>("登录成功", new
+                return new ApiResponse<AuthDto>("登录成功", new AuthDto
                 {
                     AccessToken = accessToken,
                     RefreshToken = refreshToken,
-                    User = mapper.Map<UserDto>(user)
+                    UserInfo = mapper.Map<UserInfoDto>(user)
                 });
             }
             catch (Exception ex)
@@ -92,11 +92,11 @@ namespace MyToDo.Api.Services.Implementations
                 if (await work.SaveChangesAsync() <= 0)
                     return new ApiResponse("更新令牌失败");
 
-                return new ApiResponse<object>("更新令牌成功", new
+                return new ApiResponse<AuthDto>("更新令牌成功", new AuthDto
                 {
                     AccessToken = newAccessToken,
                     RefreshToken = newRefreshToken,
-                    User = mapper.Map<UserDto>(user)
+                    UserInfo = mapper.Map<UserInfoDto>(user)
                 });
             }
             catch (Exception ex)
@@ -113,7 +113,7 @@ namespace MyToDo.Api.Services.Implementations
 
                 // 检查用户是否存在
                 var exisUser = await repository.GetFirstOrDefaultAsync(predicate:
-                    x => x.UserName.Equals(dto.UserName));
+                    x => x.Username.Equals(dto.Username));
 
                 if (exisUser != null)
                     return new ApiResponse("注册失败，账号已存在");
@@ -134,11 +134,11 @@ namespace MyToDo.Api.Services.Implementations
                 if (await work.SaveChangesAsync() <= 0)
                     return new ApiResponse("注册失败：创建用户失败");
 
-                return new ApiResponse<object>("注册成功", new
+                return new ApiResponse<AuthDto>("注册成功", new AuthDto
                 {
                     AccessToken = accessToken,
                     RefreshToken = refreshToken,
-                    User = mapper.Map<UserDto>(user)
+                    UserInfo = mapper.Map<UserInfoDto>(user)
                 });
             }
             catch (Exception ex)
@@ -157,7 +157,7 @@ namespace MyToDo.Api.Services.Implementations
             var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.UserName)
+                new Claim(ClaimTypes.Name, user.Username)
                 // 可以添加更多的 Claim
             };
 

@@ -35,6 +35,9 @@ namespace MyToDo.Api.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("Uid")
+                        .HasColumnType("INTEGER");
+
                     b.Property<long>("UpdateTime")
                         .HasColumnType("INTEGER");
 
@@ -63,6 +66,9 @@ namespace MyToDo.Api.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("Uid")
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("UpdateTime")
                         .HasColumnType("INTEGER");
@@ -94,7 +100,7 @@ namespace MyToDo.Api.Migrations
                     b.Property<long>("UpdateTime")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("TEXT");
 

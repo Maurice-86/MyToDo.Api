@@ -39,12 +39,12 @@ namespace MyToDo.Api.Services.Implementations
             }
         }
 
-        public virtual async Task<ApiResponse> DeleteAsync(int id)
+        public virtual async Task<ApiResponse> DeleteAsync(int uid, int id)
         {
             try
             {
                 var entity = await repository.GetFirstOrDefaultAsync(predicate:
-                    x => x.Id.Equals(id));
+                    x => x.Uid.Equals(uid) && x.Id.Equals(id));
                 if (entity == null)
                     return new ApiResponse($"删除的数据不存在, 你输入的id={id}");
 
@@ -60,11 +60,12 @@ namespace MyToDo.Api.Services.Implementations
             }
         }
 
-        public virtual async Task<ApiResponse> GetAllAsync()
+        public virtual async Task<ApiResponse> GetAllAsync(int uid)
         {
             try
             {
-                var entities = await repository.GetAllAsync();
+                var entities = await repository.GetAllAsync(predicate: 
+                    x => x.Uid.Equals(uid));
                 var models = mapper.Map<IEnumerable<T>>(entities);
                 return new ApiResponse<IEnumerable<T>>("获取成功", models);
             }
@@ -74,12 +75,12 @@ namespace MyToDo.Api.Services.Implementations
             }
         }
 
-        public virtual async Task<ApiResponse> GetByIdAsync(int id)
+        public virtual async Task<ApiResponse> GetByIdAsync(int uid, int id)
         {
             try
             {
                 var entity = await repository.GetFirstOrDefaultAsync(predicate:
-                    x => x.Id.Equals(id));
+                    x => x.Uid.Equals(uid) && x.Id.Equals(id));
                 if (entity == null)
                     return new ApiResponse("数据不存在");
 

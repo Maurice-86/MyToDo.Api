@@ -11,6 +11,7 @@ namespace MyToDo.Api.Common.Extensions
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<ToDo, TodoDto>().ReverseMap();
             CreateMap<Memo, MemoDto>().ReverseMap();
+            CreateMap<User, UserInfoDto>().ReverseMap();
         }
     }
 }

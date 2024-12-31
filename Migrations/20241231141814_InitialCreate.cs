@@ -5,7 +5,7 @@
 namespace MyToDo.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class ini : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,6 +18,7 @@ namespace MyToDo.Api.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Title = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     Content = table.Column<string>(type: "TEXT", maxLength: 500, nullable: true),
+                    Uid = table.Column<int>(type: "INTEGER", nullable: false),
                     CreateTime = table.Column<long>(type: "INTEGER", nullable: false),
                     UpdateTime = table.Column<long>(type: "INTEGER", nullable: false)
                 },
@@ -35,6 +36,7 @@ namespace MyToDo.Api.Migrations
                     Title = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     Content = table.Column<string>(type: "TEXT", maxLength: 500, nullable: true),
                     Status = table.Column<int>(type: "INTEGER", nullable: false),
+                    Uid = table.Column<int>(type: "INTEGER", nullable: false),
                     CreateTime = table.Column<long>(type: "INTEGER", nullable: false),
                     UpdateTime = table.Column<long>(type: "INTEGER", nullable: false)
                 },
@@ -49,12 +51,12 @@ namespace MyToDo.Api.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    UserName = table.Column<string>(type: "TEXT", nullable: false),
+                    CreateTime = table.Column<long>(type: "INTEGER", nullable: false),
+                    UpdateTime = table.Column<long>(type: "INTEGER", nullable: false),
+                    Username = table.Column<string>(type: "TEXT", nullable: false),
                     Password = table.Column<string>(type: "TEXT", nullable: false),
                     RefreshToken = table.Column<string>(type: "TEXT", nullable: true),
-                    RefreshTokenExpireTime = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    CreateTime = table.Column<long>(type: "INTEGER", nullable: false),
-                    UpdateTime = table.Column<long>(type: "INTEGER", nullable: false)
+                    RefreshTokenExpireTime = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {

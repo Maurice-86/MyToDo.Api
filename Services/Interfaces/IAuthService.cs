@@ -3,7 +3,7 @@ using MyToDo.Shared.Models;
 
 namespace MyToDo.Api.Services.Interfaces
 {
-    public interface IUserService
+    public interface IAuthService
     {
         Task<ApiResponse> LoginAsync(string username, string password);
 

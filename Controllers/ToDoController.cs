@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyToDo.Api.Services.Interfaces;
+using MyToDo.Api.Services.Implementations;
 using MyToDo.Shared.Dtos;
 using MyToDo.Shared.Models;
 using MyToDo.Shared.Parameters;
@@ -11,24 +11,24 @@ namespace MyToDo.Api.Controllers
     [Route("Api/[controller]/[action]")]
     public class ToDoController : ControllerBase
     {
-        private readonly IToDoService service;
+        private readonly ToDoService service;
 
-        public ToDoController(IToDoService service)
+        public ToDoController(ToDoService service)
         {
             this.service = service;
         }
 
         [HttpGet]
-        public async Task<ApiResponse> Get(int id) =>
-            await service.GetByIdAsync(id);
+        public async Task<ApiResponse> Get(int uid, int id) =>
+            await service.GetByIdAsync(uid, id);
 
         [HttpGet]
-        public async Task<ApiResponse> GetAll() =>
-            await service.GetAllAsync();
+        public async Task<ApiResponse> GetAll(int uid) =>
+            await service.GetAllAsync(uid);
 
         [HttpGet]
-        public async Task<ApiResponse> GetAllByQueryParameter([FromQuery] QueryParameter queryParameter) =>
-            await service.GetAllByQueryParameter(queryParameter);
+        public async Task<ApiResponse> GetAllByQueryParameter(int uid, [FromQuery] QueryParameter queryParameter) =>
+            await service.GetAllByQueryParameter(uid, queryParameter);
 
         [HttpPost]
         public async Task<ApiResponse> Add([FromBody] TodoDto model) =>
@@ -39,7 +39,7 @@ namespace MyToDo.Api.Controllers
             await service.UpdateAsync(model);
 
         [HttpDelete]
-        public async Task<ApiResponse> Delete(int id) =>
-            await service.DeleteAsync(id);
+        public async Task<ApiResponse> Delete(int uid, int id) =>
+            await service.DeleteAsync(uid, id);
     }
 }

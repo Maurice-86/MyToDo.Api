@@ -33,9 +33,9 @@ namespace MyToDo.Api
             .AddCustomRepository<Memo, MemoRepository>();   // ÃÌº”≤÷¥¢
 
             // “¿¿µ◊¢»Î
-            builder.Services.AddScoped<IUserService, UserService>();
-            builder.Services.AddScoped<IToDoService, ToDoService>();
-            builder.Services.AddScoped<IMemoService, MemoService>();
+            builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddScoped<ToDoService>();
+            builder.Services.AddScoped<MemoService>();
 
             // ≈‰÷√ AutoMapper
             builder.Services.AddAutoMapper(typeof(AutoMapperProFile));

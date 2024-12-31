@@ -11,8 +11,8 @@ using MyToDo.Api.Infrastructure.Context;
 namespace MyToDo.Api.Migrations
 {
     [DbContext(typeof(MyToDoContext))]
-    [Migration("20241207121501_ini")]
-    partial class ini
+    [Migration("20241231141814_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,6 +37,9 @@ namespace MyToDo.Api.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("Uid")
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("UpdateTime")
                         .HasColumnType("INTEGER");
@@ -66,6 +69,9 @@ namespace MyToDo.Api.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("Uid")
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("UpdateTime")
                         .HasColumnType("INTEGER");
@@ -97,7 +103,7 @@ namespace MyToDo.Api.Migrations
                     b.Property<long>("UpdateTime")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("TEXT");
 

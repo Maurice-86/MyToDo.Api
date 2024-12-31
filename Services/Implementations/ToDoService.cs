@@ -2,14 +2,13 @@
 using AutoMapper;
 using LinqKit;
 using MyToDo.Api.Domain.Entities;
-using MyToDo.Api.Services.Interfaces;
 using MyToDo.Shared.Dtos;
 using MyToDo.Shared.Models;
 using MyToDo.Shared.Parameters;
 
 namespace MyToDo.Api.Services.Implementations
 {
-    public class ToDoService : BaseService<TodoDto, ToDo>, IToDoService
+    public class ToDoService : BaseService<TodoDto, ToDo>
     {
         private readonly IUnitOfWork work;
         private readonly IMapper mapper;
@@ -20,7 +19,7 @@ namespace MyToDo.Api.Services.Implementations
             this.mapper = mapper;
         }
 
-        public async Task<ApiResponse> GetAllByQueryParameter(QueryParameter queryParameter)
+        public async Task<ApiResponse> GetAllByQueryParameter(int uid, QueryParameter queryParameter)
         {
             try
             {
@@ -28,6 +27,8 @@ namespace MyToDo.Api.Services.Implementations
 
                 // 使用 LINQ 根据查询参数构建筛选条件
                 var predicate = PredicateBuilder.New<ToDo>(x => true);
+
+                predicate = predicate.And(x => x.Uid.Equals(uid));
 
                 if (!string.IsNullOrEmpty(queryParameter.Keyword))
                     predicate = predicate.And(x => x.Title.Contains(queryParameter.Keyword));

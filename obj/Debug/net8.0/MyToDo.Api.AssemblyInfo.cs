@@ -12,9 +12,9 @@ using System;
 using System.Reflection;
 
 [assembly: System.Reflection.AssemblyCompanyAttribute("MyToDo.Api")]
-[assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
+[assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2197152f8b92ab2e03f42c1f1c465a3c5809939e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1667dfdf30ba17e99a6e00e494f9fa9a6924cff7")]
 [assembly: System.Reflection.AssemblyProductAttribute("MyToDo.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MyToDo.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
